@@ -82,23 +82,77 @@ const App = () => {
   return (
     <>
       <Helmet>
-        {!!(metaData?.title || pageData?.title) && (
-          <title>{metaData?.title || pageData?.title}</title>
+        {/* Title */}
+        {!!(pageData?.title || metaData?.title) && (
+          <title>{pageData?.title || metaData?.title}</title>
         )}
-        {!!(metaData?.description || pageData?.description) && (
+
+        {/* Description */}
+        {!!(pageData?.description || metaData?.description) && (
           <meta
             name="description"
-            content={metaData?.description || pageData?.description}
+            content={pageData?.description || metaData?.description}
           />
         )}
+
+        {/* Theme color */}
         {!!metaData?.themeColor && (
           <meta name="theme-color" content={metaData.themeColor} />
         )}
+
+        {/* Favicon */}
         {!!favicon && (
           <link href={favicon} rel="shortcut icon" type="image/x-icon" />
         )}
         {!!favicon && <link href={favicon} rel="icon" />}
+        {!!favicon && <link href={favicon} rel="icon" type="image/svg+xml" />}
         {!!favicon && <link href={favicon} rel="apple-touch-icon" />}
+
+        {/* Facebook */}
+        <meta property="og:url" content={window?.location?.href} />
+        <meta property="og:type" content="website" />
+        {!!(pageData?.title || metaData?.title) && (
+          <meta
+            property="og:title"
+            content={pageData?.title || metaData?.title}
+          />
+        )}
+        {!!(pageData?.description || metaData?.description) && (
+          <meta
+            property="og:description"
+            content={pageData?.description || metaData?.description}
+          />
+        )}
+        {!!(pageData?.image || avatar) && (
+          <meta property="og:image" content={pageData?.image || avatar} />
+        )}
+
+        {/* Twitter */}
+        {!!(pageData?.summary || metaData?.summary) && (
+          <meta
+            name="twitter:card"
+            content={pageData?.summary || metaData?.summary}
+          />
+        )}
+        <meta property="twitter:domain" content={window?.location?.hostname} />
+        <meta property="twitter:url" content={window?.location?.href} />
+        {!!(pageData?.title || metaData?.title) && (
+          <meta
+            name="twitter:title"
+            content={pageData?.title || metaData?.title}
+          />
+        )}
+        {!!(pageData?.description || metaData?.description) && (
+          <meta
+            name="twitter:description"
+            content={pageData?.description || metaData?.description}
+          />
+        )}
+        {!!(pageData?.image || avatar) && (
+          <meta name="twitter:image" content={pageData?.image || avatar} />
+        )}
+
+        {/* Custom CSS */}
         {!!metaData?.customCss && <style>{metaData.customCss}</style>}
       </Helmet>
 

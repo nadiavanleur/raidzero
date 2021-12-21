@@ -1,0 +1,25 @@
+/* Root */
+:root {
+  /* Spacing */
+  --s-a11y: 48px;
+  --s-base: 20px;
+  --s-small: calc(var(--s-base) / 2);
+  --s-large: calc(var(--s-base) * 2);
+  /* Colors */
+  --c-white: #fff;
+  --c-white-transparent: rgba(255, 255, 255, 0.5);
+  --c-dark-gray: #2e2e2e;
+  --c-dark-gray-transparent: rgba(46, 46, 46, 0.5);
+  /* Shadow */
+  --text-shadow: 0 0 5px var(--c-background-color);
+  /* Border */
+  --border-base: 4px solid var(--c-accent-color);
+  /* Gradients */
+  --g-spotify-gradient: rgb(40, 40, 40)
+    linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.8));
+  /* Custom colors */
+  --c-accent-color: var(--c-dark-gray);
+  --c-accent-color-transparent: var(--c-dark-gray-transparent);
+  --c-background-color: var(--c-white);
+  --c-background-color-transparent: var(--c-white-transparent);
+}

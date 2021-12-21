@@ -1,0 +1,47 @@
+/* Body */
+body {
+  background: var(--c-background-color);
+}
+
+.c-body {
+  display: grid;
+  grid-template-rows: 1fr auto;
+  min-height: 100vh;
+  color: var(--c-accent-color);
+  font-family: "Nanum Gothic", "Open Sans", Arial, Helvetica, sans-serif;
+  font-size: 1rem;
+  line-height: 1.5;
+  border: var(--border-base);
+}
+
+.c-body__inner {
+  position: relative;
+
+  &:not(:last-child) {
+    border-bottom: var(--border-base);
+  }
+}
+
+.c-body__inner:after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  background: var(--c-background-color-transparent);
+  z-index: -1;
+}
+
+.c-body__background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  filter: blur(10px);
+  // background: url(img/artist-cover.jpg);
+}

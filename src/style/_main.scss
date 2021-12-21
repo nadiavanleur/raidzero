@@ -1,0 +1,31 @@
+/* Main */
+.c-main {
+  max-width: 30em;
+  margin: 0 auto;
+  padding: var(--s-base);
+  text-shadow: var(--text-shadow);
+}
+
+.c-main__avatar {
+  display: block;
+  margin: 0 auto var(--s-large);
+  width: 250px;
+  height: 250px;
+  object-fit: contain;
+  object-position: center center;
+  border: var(--border-base);
+}
+
+.c-main__title {
+  margin-bottom: var(--s-base);
+  font-weight: 500;
+}
+
+.c-main__logo {
+  height: 2.1875rem;
+  width: auto;
+}
+
+.c-main__description {
+  margin-bottom: var(--s-large);
+}

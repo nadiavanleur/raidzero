@@ -1,0 +1,11 @@
+/* Footer */
+.c-footer {
+  width: 100%;
+  background: var(--g-spotify-gradient);
+  position: sticky;
+  bottom: 0;
+}
+
+.c-footer__player {
+  display: block;
+}

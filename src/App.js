@@ -155,6 +155,7 @@ const App = () => {
         {!!metaData?.footerEmbedUrl && (
           <footer className="c-footer">
             <iframe
+              title={`${metaData?.title || ""} embed`}
               src={metaData?.footerEmbedUrl}
               width="100%"
               height={calculateFooterEmbedHeight(metaData?.footerEmbedUrl)}

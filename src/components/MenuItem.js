@@ -16,6 +16,7 @@ const MenuItem = ({ data, sys }) => {
       <a
         href={menuItem.url}
         target="_blank"
+        rel="noreferrer"
         className="c-nav__link"
         title={menuItem.label}
       >

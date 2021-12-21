@@ -13,6 +13,9 @@ import getData, { getAsset } from "./helpers/getData";
  * Base URL
  * https://cdn.contentful.com
  *
+ * Preview URL
+ * https://preview.contentful.com
+ *
  * Get space
  * GET /spaces/{space_id}?access_token={access_token}
  *
@@ -22,6 +25,8 @@ import getData, { getAsset } from "./helpers/getData";
  * Get maximum include depth
  * &include=10
  */
+const BASE_URL = "https://cdn.contentful.com";
+const PREVIEW_URL = "https://preview.contentful.com";
 
 const App = () => {
   const [data, setData] = useState({});
@@ -31,8 +36,18 @@ const App = () => {
   const [socialMenuItems, setSocialMenuItems] = useState([]);
 
   useEffect(() => {
+    const isPreview = !window?.location?.host?.includes("preview");
+    const requestData = {
+      url: isPreview ? PREVIEW_URL : BASE_URL,
+      spaceId: "8wfmqgu10mnd",
+      environmentId: "master",
+      accessToken: isPreview
+        ? "Q94R5hLqW3kWK-VS5c4Yjn3mO8u5RNZrh965JY0sRmM"
+        : "Dd6TfLSKZjDyLQrMjJ41BGJF7dhyn1bdfBO1iS8154U",
+    };
+
     fetch(
-      "https://cdn.contentful.com/spaces/8wfmqgu10mnd/environments/master/entries?access_token=Dd6TfLSKZjDyLQrMjJ41BGJF7dhyn1bdfBO1iS8154U&include=10"
+      `${requestData.url}/spaces/${requestData.spaceId}/environments/${requestData.environmentId}/entries?access_token=${requestData.accessToken}&include=10`
     )
       .then((response) => response.json())
       .then(
@@ -57,10 +72,12 @@ const App = () => {
       );
   }, []);
 
-  const background = getAsset(data, metaData?.backgroundImage?.sys?.id);
-  const avatar = getAsset(data, metaData?.avatar?.sys?.id);
-  const logoIcon = getAsset(data, metaData?.logoIcon?.sys?.id);
-  const logoText = getAsset(data, metaData?.logoText?.sys?.id);
+  const background = getAsset(data, metaData?.backgroundImage?.sys?.id)?.file
+    ?.url;
+  const favicon = getAsset(data, metaData?.favicon?.sys?.id)?.file?.url;
+  const avatar = getAsset(data, metaData?.avatar?.sys?.id)?.file?.url;
+  const logoIcon = getAsset(data, metaData?.logoIcon?.sys?.id)?.file?.url;
+  const logoText = getAsset(data, metaData?.logoText?.sys?.id)?.file?.url;
 
   return (
     <>
@@ -77,20 +94,11 @@ const App = () => {
         {!!metaData?.themeColor && (
           <meta name="theme-color" content={metaData.themeColor} />
         )}
-        {!!metaData?.favicon && (
-          <>
-            <link
-              href={metaData.favicon}
-              rel="shortcut icon"
-              type="image/x-icon"
-            />
-            <link rel="icon" href={metaData.favicon} />
-            <link rel="apple-touch-icon" href={metaData.favicon} />
-          </>
+        {!!favicon && (
+          <link href={favicon} rel="shortcut icon" type="image/x-icon" />
         )}
-        {!!metaData?.manifest && (
-          <link rel="manifest" href={metaData.manifest} />
-        )}
+        {!!favicon && <link href={favicon} rel="icon" />}
+        {!!favicon && <link href={favicon} rel="apple-touch-icon" />}
         {!!metaData?.customCss && <style>{metaData.customCss}</style>}
       </Helmet>
 
@@ -103,9 +111,9 @@ const App = () => {
               extraClasses="c-nav--header"
             >
               <li className="c-nav__list-item">
-                {!!logoIcon?.file?.url && (
+                {!!logoIcon && (
                   <img
-                    src={logoIcon.file.url}
+                    src={logoIcon}
                     alt={pageData?.title || ""}
                     className="c-nav__icon"
                   />
@@ -114,18 +122,18 @@ const App = () => {
             </Menu>
           </header>
           <main className="c-main">
-            {!!avatar?.file?.url && (
+            {!!avatar && (
               <img
-                src={avatar.file.url}
+                src={avatar}
                 alt="Artist avatar"
                 className="c-main__avatar"
               />
             )}
             <div className="c-main__content">
               <h1 className="c-main__title">
-                {!!logoText?.file?.url && (
+                {!!logoText && (
                   <img
-                    src={logoText.file.url}
+                    src={logoText}
                     alt={pageData?.title || ""}
                     className="c-main__logo"
                   />
@@ -143,12 +151,8 @@ const App = () => {
               extraClasses="c-nav--socials"
             />
           </main>
-          {!!background?.file?.url && (
-            <img
-              src={background.file.url}
-              alt=""
-              className="c-body__background"
-            />
+          {!!background && (
+            <img src={background} alt="" className="c-body__background" />
           )}
         </div>
 

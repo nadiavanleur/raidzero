@@ -389,12 +389,15 @@ module.exports = function (webpackEnv) {
                     ref: true,
                   },
                 },
-                {
-                  loader: require.resolve("file-loader"),
-                  options: {
-                    name: "static/media/[name].[ext]",
-                  },
-                },
+                /**
+                 * Following code turns files into base64 URIs. We don't want that.
+                 */
+                // {
+                //   loader: require.resolve("file-loader"),
+                //   options: {
+                //     name: "static/media/[name].[ext]",
+                //   },
+                // },
               ],
               issuer: {
                 and: [/\.(ts|tsx|js|jsx|md|mdx)$/],

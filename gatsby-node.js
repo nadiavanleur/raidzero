@@ -36,6 +36,23 @@ const requestData = {
     : "Dd6TfLSKZjDyLQrMjJ41BGJF7dhyn1bdfBO1iS8154U",
 };
 
+const getAsset = (data, id) => {
+  if (
+    !(
+      data &&
+      data.includes &&
+      data.includes.Asset &&
+      data.includes.Asset.length
+    ) ||
+    !id
+  )
+    return;
+
+  const newData = data.includes.Asset.find((item) => item.sys.id === id);
+
+  return !!newData && newData.fields;
+};
+
 const getData = (data, contentType, field) => {
   if (!data && !(contentType || (field && field.type && field.value))) return;
 
@@ -73,12 +90,20 @@ const getAllData = async () => {
   return result;
 };
 
+const getFileUrl = (name, data, metaData) => {
+  const asset = getAsset(
+    data,
+    metaData && metaData[name] && metaData[name].sys && metaData[name].sys.id
+  );
+  return !!asset && !!asset.file && asset.file.url;
+};
+
 exports.createPages = async ({ actions: { createPage } }) => {
   const allData = await getAllData();
 
-  const data = allData;
+  const data = await allData;
   const pageData = getData(allData, "landingPage");
-  const metaData = getData(allData, "metaData");
+  const metaData = await getData(allData, "metaData");
   const headerMenuData = getData(allData, "menu", {
     type: "menuType",
     value: "header menu",
@@ -89,6 +114,11 @@ exports.createPages = async ({ actions: { createPage } }) => {
     value: "social menu",
   });
   const socialMenuItems = socialMenuData && socialMenuData.menuItems;
+  const background = getFileUrl("backgroundImage", data, metaData);
+  const favicon = getFileUrl("favicon", data, metaData);
+  const avatar = getFileUrl("avatar", data, metaData);
+  const logoIcon = getFileUrl("logoIcon", data, metaData);
+  const logoText = getFileUrl("logoText", data, metaData);
 
   createPage({
     path: `/`,
@@ -99,6 +129,11 @@ exports.createPages = async ({ actions: { createPage } }) => {
       metaData,
       headerMenuItems,
       socialMenuItems,
+      background,
+      favicon,
+      avatar,
+      logoIcon,
+      logoText,
     },
   });
 };

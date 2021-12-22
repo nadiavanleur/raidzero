@@ -26,8 +26,6 @@ const Icon = ({ icon, extraClasses }) => {
 
   const SelectedIcon = ICONS[icon] || ICONS.other;
 
-  return <div />;
-
   return <SelectedIcon className={extraClasses} />;
 };
 

@@ -71,7 +71,7 @@
   },
   "scripts": {
     "start": "node scripts/start.js",
-    "build": "node scripts/build.js && npm run gatsby-build",
+    "build": "npm run gatsby-build && node scripts/build.js",
     "test": "node scripts/test.js",
     "gatsby-build": "rm -rf .cache/ && gatsby build",
     "gatsby-develop": "rm -rf .cache/ && gatsby develop"

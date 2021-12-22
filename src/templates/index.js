@@ -10,22 +10,19 @@ import calculateFooterEmbedHeight from "../helpers/calculateFooterEmbedHeight";
 import { getAsset } from "../helpers/getData";
 
 const LandingPage = ({
-  pageContext: { data, pageData, metaData, headerMenuItems, socialMenuItems },
+  pageContext: {
+    data,
+    pageData,
+    metaData,
+    headerMenuItems,
+    socialMenuItems,
+    background,
+    favicon,
+    avatar,
+    logoIcon,
+    logoText,
+  },
 }) => {
-  const getFileUrl = (name) => {
-    const asset = getAsset(
-      data,
-      metaData && metaData[name] && metaData[name].sys && metaData[name].sys.id
-    );
-    return !!asset && !!asset.file && asset.file.url;
-  };
-
-  const background = getFileUrl("backgroundImage");
-  const favicon = getFileUrl("favicon");
-  const avatar = getFileUrl("avatar");
-  const logoIcon = getFileUrl("logoIcon");
-  const logoText = getFileUrl("logoText");
-
   return (
     <>
       <Helmet>

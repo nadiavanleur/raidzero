@@ -16,10 +16,10 @@ body {
 
 .c-body__inner {
   position: relative;
+}
 
-  &:not(:last-child) {
-    border-bottom: var(--border-base);
-  }
+.c-body__inner:not(:last-child) {
+  border-bottom: var(--border-base);
 }
 
 .c-body__inner:after {
@@ -43,5 +43,5 @@ body {
   height: 100%;
   z-index: -1;
   filter: blur(10px);
-  // background: url(img/artist-cover.jpg);
+  /* background: url(img/artist-cover.jpg); */
 }

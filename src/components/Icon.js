@@ -1,15 +1,15 @@
 import React from "react";
-import { ReactComponent as EmailIcon } from "../assets/icons/email.svg";
-import { ReactComponent as FacebookIcon } from "../assets/icons/facebook.svg";
-import { ReactComponent as InstagramIcon } from "../assets/icons/instagram.svg";
-import { ReactComponent as LinkIcon } from "../assets/icons/link.svg";
-import { ReactComponent as LinkedinIcon } from "../assets/icons/linkedin.svg";
-import { ReactComponent as MixcloudIcon } from "../assets/icons/mixcloud.svg";
-import { ReactComponent as SoundcloudIcon } from "../assets/icons/soundcloud.svg";
-import { ReactComponent as SpotifyIcon } from "../assets/icons/spotify.svg";
-import { ReactComponent as TwitterIcon } from "../assets/icons/twitter.svg";
+import EmailIcon from "../assets/icons/email.svg";
+import FacebookIcon from "../assets/icons/facebook.svg";
+import InstagramIcon from "../assets/icons/instagram.svg";
+import LinkIcon from "../assets/icons/link.svg";
+import LinkedinIcon from "../assets/icons/linkedin.svg";
+import MixcloudIcon from "../assets/icons/mixcloud.svg";
+import SoundcloudIcon from "../assets/icons/soundcloud.svg";
+import SpotifyIcon from "../assets/icons/spotify.svg";
+import TwitterIcon from "../assets/icons/twitter.svg";
 
-const icons = {
+const ICONS = {
   email: EmailIcon,
   facebook: FacebookIcon,
   instagram: InstagramIcon,
@@ -22,7 +22,11 @@ const icons = {
 };
 
 const Icon = ({ icon, extraClasses }) => {
-  const SelectedIcon = icons[icon] || LinkIcon;
+  if (!icon) return;
+
+  const SelectedIcon = ICONS[icon] || ICONS.other;
+
+  return <div />;
 
   return <SelectedIcon className={extraClasses} />;
 };

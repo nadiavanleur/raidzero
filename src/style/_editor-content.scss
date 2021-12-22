@@ -4,16 +4,16 @@
 
 .c-editor-content {
   white-space: pre-wrap;
+}
 
-  * {
-    max-width: 100%;
-  }
+.c-editor-content * {
+  max-width: 100%;
+}
 
-  img,
-  video,
-  table {
-    display: block;
-    margin: 0 auto;
-    margin-bottom: var(--s-base);
-  }
+.c-editor-content img,
+.c-editor-content video,
+.c-editor-content table {
+  display: block;
+  margin: 0 auto;
+  margin-bottom: var(--s-base);
 }

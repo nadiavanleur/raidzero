@@ -13,6 +13,18 @@ const App = () => {
   const [socialMenuItems, setSocialMenuItems] = useState([]);
 
   useEffect(() => {
+    const BASE_URL = "https://cdn.contentful.com";
+    const PREVIEW_URL = "https://preview.contentful.com";
+    const isPreview = true;
+    const requestData = {
+      url: isPreview ? PREVIEW_URL : BASE_URL,
+      spaceId: "8wfmqgu10mnd",
+      environmentId: "master",
+      accessToken: isPreview
+        ? "Q94R5hLqW3kWK-VS5c4Yjn3mO8u5RNZrh965JY0sRmM"
+        : "Dd6TfLSKZjDyLQrMjJ41BGJF7dhyn1bdfBO1iS8154U",
+    };
+
     fetch(
       `${requestData.url}/spaces/${requestData.spaceId}/environments/${requestData.environmentId}/entries?access_token=${requestData.accessToken}&include=10`
     )

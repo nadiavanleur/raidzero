@@ -1,12 +1,3 @@
-// require = require("esm")(module);
-// module.exports = require("./gatsby-node.esm.js");
-
-// require(`@babel/register`);
-// module.exports = require(`./gatsby-node.mjs`);
-
-// import "@babel/register";
-// import "./gatsby-node.mjs";
-
 /**
  * space_id=8wfmqgu10mnd
  * access_token=Dd6TfLSKZjDyLQrMjJ41BGJF7dhyn1bdfBO1iS8154U
@@ -83,47 +74,62 @@ const getAllData = async () => {
 };
 
 exports.createPages = async ({ actions: { createPage } }) => {
-  //   const allData = await getAllData();
+  const allData = await getAllData();
 
-  //   const data = allData;
-  //   const pageData = getData(allData, "landingPage");
-  //   const metaData = getData(allData, "metaData");
-  //   const headerMenuData = getData(allData, "menu", {
-  //     type: "menuType",
-  //     value: "header menu",
-  //   });
-  //   const headerMenuItems = headerMenuData && headerMenuData.menuItems;
-  //   const socialMenuData = getData(allData, "menu", {
-  //     type: "menuType",
-  //     value: "social menu",
-  //   });
-  //   const socialMenuItems = socialMenuData && socialMenuData.menuItems;
+  const data = allData;
+  const pageData = getData(allData, "landingPage");
+  const metaData = getData(allData, "metaData");
+  const headerMenuData = getData(allData, "menu", {
+    type: "menuType",
+    value: "header menu",
+  });
+  const headerMenuItems = headerMenuData && headerMenuData.menuItems;
+  const socialMenuData = getData(allData, "menu", {
+    type: "menuType",
+    value: "social menu",
+  });
+  const socialMenuItems = socialMenuData && socialMenuData.menuItems;
 
   createPage({
     path: `/`,
     component: require.resolve(`./src/templates/index.js`),
-    // context: {
-    //   data,
-    //   pageData,
-    //   metaData,
-    //   headerMenuItems,
-    //   socialMenuItems,
-    // },
+    context: {
+      data,
+      pageData,
+      metaData,
+      headerMenuItems,
+      socialMenuItems,
+    },
   });
 };
 
+/**
+ * Put new pages in ./dist folder
+ */
 exports.onPreInit = () => {
   if (process.argv[2] === "build") {
-    fs.rmdirSync(path.join(__dirname, "dist"), { recursive: true });
-    fs.renameSync(
-      path.join(__dirname, "public"),
-      path.join(__dirname, "public_dev")
-    );
+    //   Remove ./dist
+    if (fs.existsSync("./dist"))
+      fs.rmdirSync(path.join(__dirname, "dist"), { recursive: true });
+
+    // //   Remove ./.cache
+    // if (fs.existsSync("./.cache"))
+    //   fs.rmdirSync(path.join(__dirname, ".cache"), { recursive: true });
+
+    //   Move ./public to ./public_dev
+    if (!fs.existsSync("./public_dev"))
+      fs.renameSync(
+        path.join(__dirname, "public"),
+        path.join(__dirname, "public_dev")
+      );
   }
 };
 
 exports.onPostBuild = () => {
+  // Move ./public to ./dist
   fs.renameSync(path.join(__dirname, "public"), path.join(__dirname, "dist"));
+
+  //   Move ./public_dev to ./public
   fs.renameSync(
     path.join(__dirname, "public_dev"),
     path.join(__dirname, "public")

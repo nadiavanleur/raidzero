@@ -5,29 +5,6 @@ import Menu from "./components/Menu";
 import calculateFooterEmbedHeight from "./helpers/calculateFooterEmbedHeight";
 import getData, { getAsset } from "./helpers/getData";
 
-/**
- * space_id=8wfmqgu10mnd
- * access_token=Dd6TfLSKZjDyLQrMjJ41BGJF7dhyn1bdfBO1iS8154U
- * environment_id=master
- *
- * Base URL
- * https://cdn.contentful.com
- *
- * Preview URL
- * https://preview.contentful.com
- *
- * Get space
- * GET /spaces/{space_id}?access_token={access_token}
- *
- * Get entries
- * GET /spaces/{space_id}/environments/{environment_id}/entries?access_token={access_token}
- *
- * Get maximum include depth
- * &include=10
- */
-const BASE_URL = "https://cdn.contentful.com";
-const PREVIEW_URL = "https://preview.contentful.com";
-
 const App = () => {
   const [data, setData] = useState({});
   const [pageData, setPageData] = useState({});
@@ -36,16 +13,6 @@ const App = () => {
   const [socialMenuItems, setSocialMenuItems] = useState([]);
 
   useEffect(() => {
-    const isPreview = !window?.location?.host?.includes("preview");
-    const requestData = {
-      url: isPreview ? PREVIEW_URL : BASE_URL,
-      spaceId: "8wfmqgu10mnd",
-      environmentId: "master",
-      accessToken: isPreview
-        ? "Q94R5hLqW3kWK-VS5c4Yjn3mO8u5RNZrh965JY0sRmM"
-        : "Dd6TfLSKZjDyLQrMjJ41BGJF7dhyn1bdfBO1iS8154U",
-    };
-
     fetch(
       `${requestData.url}/spaces/${requestData.spaceId}/environments/${requestData.environmentId}/entries?access_token=${requestData.accessToken}&include=10`
     )
@@ -84,14 +51,17 @@ const App = () => {
       <Helmet>
         {/* Title */}
         {!!(pageData?.title || metaData?.title) && (
-          <title>{pageData?.title || metaData?.title}</title>
+          <title>{(pageData?.title || metaData?.title).substring(0, 60)}</title>
         )}
 
         {/* Description */}
         {!!(pageData?.description || metaData?.description) && (
           <meta
             name="description"
-            content={pageData?.description || metaData?.description}
+            content={(pageData?.description || metaData?.description).substring(
+              0,
+              160
+            )}
           />
         )}
 
@@ -114,13 +84,16 @@ const App = () => {
         {!!(pageData?.title || metaData?.title) && (
           <meta
             property="og:title"
-            content={pageData?.title || metaData?.title}
+            content={(pageData?.title || metaData?.title).substring(0, 60)}
           />
         )}
         {!!(pageData?.description || metaData?.description) && (
           <meta
             property="og:description"
-            content={pageData?.description || metaData?.description}
+            content={(pageData?.description || metaData?.description).substring(
+              0,
+              160
+            )}
           />
         )}
         {!!(pageData?.image || avatar) && (
@@ -139,13 +112,16 @@ const App = () => {
         {!!(pageData?.title || metaData?.title) && (
           <meta
             name="twitter:title"
-            content={pageData?.title || metaData?.title}
+            content={(pageData?.title || metaData?.title).substring(0, 60)}
           />
         )}
         {!!(pageData?.description || metaData?.description) && (
           <meta
             name="twitter:description"
-            content={pageData?.description || metaData?.description}
+            content={(pageData?.description || metaData?.description).substring(
+              0,
+              160
+            )}
           />
         )}
         {!!(pageData?.image || avatar) && (

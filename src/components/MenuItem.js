@@ -1,3 +1,4 @@
+import React from "react";
 import { getAsset, getEntry } from "../helpers/getData";
 import Icon from "./Icon";
 

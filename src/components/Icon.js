@@ -1,3 +1,4 @@
+import React from "react";
 import { ReactComponent as EmailIcon } from "../assets/icons/email.svg";
 import { ReactComponent as FacebookIcon } from "../assets/icons/facebook.svg";
 import { ReactComponent as InstagramIcon } from "../assets/icons/instagram.svg";

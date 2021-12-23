@@ -7,7 +7,6 @@ import { Helmet } from "react-helmet";
 import ReactMarkdown from "react-markdown";
 import Menu from "../components/Menu";
 import calculateFooterEmbedHeight from "../helpers/calculateFooterEmbedHeight";
-import { getAsset } from "../helpers/getData";
 
 const LandingPage = ({
   pageContext: {

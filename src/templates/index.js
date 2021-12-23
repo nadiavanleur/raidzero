@@ -37,13 +37,13 @@ const LandingPage = ({
 
         {/* Description */}
         {!!(
-          (pageData && pageData.description) ||
+          (pageData && pageData.metaDescription) ||
           (metaData && metaData.description)
         ) && (
           <meta
             name="description"
             content={(
-              (pageData && pageData.description) ||
+              (pageData && pageData.metaDescription) ||
               (metaData && metaData.description)
             ).substring(0, 160)}
           />
@@ -83,13 +83,13 @@ const LandingPage = ({
           />
         )}
         {!!(
-          (pageData && pageData.description) ||
+          (pageData && pageData.metaDescription) ||
           (metaData && metaData.description)
         ) && (
           <meta
             property="og:description"
             content={(
-              (pageData && pageData.description) ||
+              (pageData && pageData.metaDescription) ||
               (metaData && metaData.description)
             ).substring(0, 160)}
           />
@@ -102,15 +102,10 @@ const LandingPage = ({
         )}
 
         {/* Twitter */}
-        {!!(
-          (pageData && pageData.summary) ||
-          (metaData && metaData.summary)
-        ) && (
+        {!!(pageData && pageData.metaDescription) && (
           <meta
             name="twitter:card"
-            content={
-              (pageData && pageData.summary) || (metaData && metaData.summary)
-            }
+            content={pageData && pageData.metaDescription}
           />
         )}
         <meta
@@ -140,16 +135,10 @@ const LandingPage = ({
             ).substring(0, 60)}
           />
         )}
-        {!!(
-          (pageData && pageData.description) ||
-          (metaData && metaData.description)
-        ) && (
+        {!!(metaData && metaData.description) && (
           <meta
             name="twitter:description"
-            content={(
-              (pageData && pageData.description) ||
-              (metaData && metaData.description)
-            ).substring(0, 160)}
+            content={(metaData && metaData.description).substring(0, 160)}
           />
         )}
         {!!((pageData && pageData.image) || avatar) && (

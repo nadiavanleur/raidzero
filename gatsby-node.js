@@ -25,15 +25,14 @@ const fs = require("fs");
 
 const BASE_URL = "https://cdn.contentful.com";
 const PREVIEW_URL = "https://preview.contentful.com";
-
-const isPreview = !(process.env && process.env.ENV === "production");
+const IS_PREVIEW = false;
 const requestData = {
-  url: isPreview ? PREVIEW_URL : BASE_URL,
-  spaceId: "8wfmqgu10mnd",
-  environmentId: "master",
-  accessToken: isPreview
-    ? "Q94R5hLqW3kWK-VS5c4Yjn3mO8u5RNZrh965JY0sRmM"
-    : "Dd6TfLSKZjDyLQrMjJ41BGJF7dhyn1bdfBO1iS8154U",
+  url: IS_PREVIEW ? PREVIEW_URL : BASE_URL,
+  spaceId: process.env.SPACE_ID,
+  environmentId: process.env.ENVIRONMENT_ID,
+  accessToken: IS_PREVIEW
+    ? process.env.ACCESS_TOKEN_PREVIEW
+    : process.env.ACCESS_TOKEN_LIVE,
 };
 
 const getAsset = (data, id) => {

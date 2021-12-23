@@ -95,7 +95,7 @@ const getFileUrl = (name, data, metaData) => {
     data,
     metaData && metaData[name] && metaData[name].sys && metaData[name].sys.id
   );
-  return !!asset && !!asset.file && asset.file.url;
+  return !!asset && !!asset.file && `https:${asset.file.url}`;
 };
 
 exports.createPages = async ({ actions: { createPage } }) => {

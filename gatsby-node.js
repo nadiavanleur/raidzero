@@ -103,6 +103,7 @@ exports.createPages = async ({ actions: { createPage } }) => {
   const data = await allData;
   const pageData = getData(allData, "landingPage");
   const metaData = await getData(allData, "metaData");
+  const themeIsLight = (metaData.theme || "light") === "light";
   const headerMenuData = getData(allData, "menu", {
     type: "menuType",
     value: "header menu",
@@ -116,8 +117,12 @@ exports.createPages = async ({ actions: { createPage } }) => {
   const background = getFileUrl("backgroundImage", data, metaData);
   const favicon = getFileUrl("favicon", data, metaData);
   const avatar = getFileUrl("avatar", data, metaData);
-  const logoIcon = getFileUrl("logoIcon", data, metaData);
-  const logoText = getFileUrl("logoText", data, metaData);
+  const logoIconBlack = getFileUrl("logoIconBlack", data, metaData);
+  const logoIconWhite = getFileUrl("logoIconWhite", data, metaData);
+  const logoIcon = themeIsLight ? logoIconBlack : logoIconWhite;
+  const logoTextBlack = getFileUrl("logoTextBlack", data, metaData);
+  const logoTextWhite = getFileUrl("logoTextWhite", data, metaData);
+  const logoText = themeIsLight ? logoTextBlack : logoTextWhite;
 
   createPage({
     path: `/`,
@@ -132,7 +137,14 @@ exports.createPages = async ({ actions: { createPage } }) => {
       favicon,
       avatar,
       logoIcon,
+      logoIconBlack,
+      logoIconWhite,
       logoText,
+      logoTextBlack,
+      logoTextWhite,
+      process: {
+        env: process.env,
+      },
     },
   });
 };

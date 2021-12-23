@@ -1,5 +1,5 @@
 import React from "react";
-import { getAsset, getEntry } from "../helpers/getData";
+import { getEntry, getFileUrl } from "../helpers/getData";
 import Icon from "./Icon";
 
 const MenuItem = ({ data, sys }) => {
@@ -12,12 +12,7 @@ const MenuItem = ({ data, sys }) => {
 
   if (!(menuItem && menuItem.url)) return null;
 
-  const menuItemIcon =
-    menuItem &&
-    menuItem.uploadedIcon &&
-    menuItem.uploadedIcon.sys &&
-    menuItem.uploadedIcon.sys.id &&
-    getAsset(data, menuItem.uploadedIcon.sys.id);
+  const menuItemIcon = getFileUrl("uploadedIcon", data, menuItem);
 
   return (
     <li
@@ -31,12 +26,8 @@ const MenuItem = ({ data, sys }) => {
         className="c-nav__link"
         title={menuItem.label || ""}
       >
-        {!!(menuItemIcon && menuItemIcon.file && menuItemIcon.file.url) ? (
-          <img
-            src={menuItemIcon.file.url}
-            alt={menuItemIcon.title || ""}
-            className="c-nav__icon"
-          />
+        {!!menuItemIcon ? (
+          <img src={menuItemIcon} alt="" className="c-nav__icon" />
         ) : (
           <>
             {!!menuItem.icon && (

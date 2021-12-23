@@ -19,12 +19,39 @@ const LandingPage = ({
     favicon,
     avatar,
     logoIcon,
+    logoIconBlack,
+    logoIconWhite,
     logoText,
+    logoTextBlack,
+    logoTextWhite,
+    process,
   },
 }) => {
   return (
     <>
-      <Helmet>
+      <Helmet
+        style={[
+          {
+            cssText: [
+              //   Theme CSS
+              ...(metaData && metaData.theme && metaData.theme === "dark"
+                ? [
+                    `
+                        :root {
+                            --c-accent-color: var(--c-white);
+                            --c-accent-color-transparent: var(--c-white-transparent);
+                            --c-background-color: var(--c-dark-gray);
+                            --c-background-color-transparent: var(--c-dark-gray-transparent);
+                        }
+                    `,
+                  ]
+                : []),
+              //   Custom CSS
+              ...(metaData && metaData.customCss ? [metaData.customCss] : []),
+            ].join("\n\n/*\n *\n *\n *\n *\n */\n\n"),
+          },
+        ]}
+      >
         {/* Title */}
         {!!((pageData && pageData.title) || (metaData && metaData.title)) && (
           <title>
@@ -147,11 +174,6 @@ const LandingPage = ({
             content={(pageData && pageData.image) || avatar}
           />
         )}
-
-        {/* Custom CSS */}
-        {!!(metaData && metaData.customCss) && (
-          <style>{metaData.customCss}</style>
-        )}
       </Helmet>
 
       <div className="c-body">
@@ -225,6 +247,89 @@ const LandingPage = ({
           </footer>
         )}
       </div>
+
+      {/* Google structured data */}
+      {!!(
+        typeof process !== "undefined" &&
+        process.env &&
+        process.env.WEBSITE_HOST
+      ) && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              url: process.env.WEBSITE_HOST,
+              ...(logoIconBlack || logoIconWhite
+                ? { logo: logoIconBlack || logoIconWhite }
+                : {}),
+              ...(metaData.metaTitle ? { name: metaData.metaTitle } : {}),
+              ...(metaData.email ? { email: metaData.email } : {}),
+              ...(metaData.foundingDate
+                ? { foundingDate: metaData.foundingDate }
+                : {}),
+              ...(metaData.knowsAbout
+                ? { knowsAbout: metaData.knowsAbout }
+                : {}),
+              ...(metaData.location
+                ? {
+                    location: metaData.location,
+                    address: {
+                      "@type": "PostalAddress",
+                      addressLocality: metaData.location,
+                    },
+                  }
+                : {}),
+              ...(metaData.slogan ? { slogan: metaData.slogan } : {}),
+              ...(metaData.telephone ? { telephone: metaData.telephone } : {}),
+              ...(metaData.email || metaData.telephone
+                ? {
+                    contactPoint: [
+                      {
+                        "@type": "ContactPoint",
+                        telephone: metaData.telephone,
+                        email: metaData.email,
+                        contactType: metaData.contactType || "contact",
+                      },
+                    ],
+                  }
+                : {}),
+              ...(metaData.alternateName
+                ? { alternateName: metaData.alternateName }
+                : {}),
+              ...(metaData.description
+                ? { description: metaData.description }
+                : {}),
+              ...(avatar ? { image: avatar } : {}),
+              ...(metaData.sameAs ? { sameAs: metaData.sameAs } : {}),
+              ...(metaData.brandName && metaData.brandUrl
+                ? {
+                    brand: {
+                      "@context": "https://schema.org",
+                      "@type": "Organization",
+                      url: metaData.brandUrl,
+                      name: metaData.brandName,
+                      contactPoint: [
+                        ...(metaData.brandEmail || metaData.brandTelephone
+                          ? [
+                              {
+                                "@type": "ContactPoint",
+                                telephone: metaData.brandTelephone,
+                                email: metaData.brandEmail,
+                                contactType:
+                                  metaData.brandContactType || "contact",
+                              },
+                            ]
+                          : []),
+                      ],
+                    },
+                  }
+                : {}),
+            }),
+          }}
+        />
+      )}
     </>
   );
 };

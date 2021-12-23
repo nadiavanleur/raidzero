@@ -30,6 +30,14 @@ export const getAsset = (data, id) => {
   return !!newData && newData.fields;
 };
 
+export const getFileUrl = (name, data, metaData) => {
+  const asset = getAsset(
+    data,
+    metaData && metaData[name] && metaData[name].sys && metaData[name].sys.id
+  );
+  return !!asset && !!asset.file && `https:${asset.file.url}`;
+};
+
 const getData = (data, contentType, field) => {
   if (!data && !(contentType || (field && field.type && field.value))) return;
 

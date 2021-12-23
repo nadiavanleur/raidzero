@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import getData, { getAsset } from "./helpers/getData";
+import getData, { getAsset, getFileUrl } from "./helpers/getData";
 import LandingPage from "./templates";
 
 const App = () => {
@@ -52,8 +52,13 @@ const App = () => {
     ?.url;
   const favicon = getAsset(data, metaData?.favicon?.sys?.id)?.file?.url;
   const avatar = getAsset(data, metaData?.avatar?.sys?.id)?.file?.url;
-  const logoIcon = getAsset(data, metaData?.logoIcon?.sys?.id)?.file?.url;
-  const logoText = getAsset(data, metaData?.logoText?.sys?.id)?.file?.url;
+  const themeIsLight = (metaData.theme || "light") === "light";
+  const logoIconBlack = getFileUrl("logoIconBlack", data, metaData);
+  const logoIconWhite = getFileUrl("logoIconWhite", data, metaData);
+  const logoIcon = themeIsLight ? logoIconBlack : logoIconWhite;
+  const logoTextBlack = getFileUrl("logoTextBlack", data, metaData);
+  const logoTextWhite = getFileUrl("logoTextWhite", data, metaData);
+  const logoText = themeIsLight ? logoTextBlack : logoTextWhite;
 
   return (
     <LandingPage
@@ -67,7 +72,11 @@ const App = () => {
         favicon,
         avatar,
         logoIcon,
+        logoIconBlack,
+        logoIconWhite,
         logoText,
+        logoTextBlack,
+        logoTextWhite,
       }}
     />
   );

@@ -1,5 +1,5 @@
 /**
- * Don't use optional chaining (?.), gatsby-build does not support it
+ * Don't use optional chaining (?.), gatsby-build does not support it!
  * */
 
 import React from "react";

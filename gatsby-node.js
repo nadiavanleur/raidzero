@@ -101,7 +101,8 @@ exports.createPages = async ({ actions: { createPage } }) => {
   const allData = await getAllData();
 
   const data = await allData;
-  const pageData = getData(allData, "landingPage");
+  const landingPageData = getData(allData, "landingPage");
+  const linksPageData = getData(allData, "linksPage");
   const metaData = await getData(allData, "metaData");
   const themeIsLight = (metaData.theme || "light") === "light";
   const headerMenuData = getData(allData, "menu", {
@@ -124,29 +125,71 @@ exports.createPages = async ({ actions: { createPage } }) => {
   const logoTextWhite = getFileUrl("logoTextWhite", data, metaData);
   const logoText = themeIsLight ? logoTextBlack : logoTextWhite;
 
-  createPage({
-    path: `/`,
-    component: require.resolve(`./src/templates/index.js`),
-    context: {
-      data,
-      pageData,
-      metaData,
-      headerMenuItems,
-      socialMenuItems,
-      background,
-      favicon,
-      avatar,
-      logoIcon,
-      logoIconBlack,
-      logoIconWhite,
-      logoText,
-      logoTextBlack,
-      logoTextWhite,
-      process: {
-        env: process.env,
+  /**
+   * Homepage
+   * @url /
+   */
+  if (landingPageData) {
+    const path = `/${landingPageData.slug || ""}`;
+
+    createPage({
+      path,
+      component: require.resolve(`./src/templates/index.js`),
+      context: {
+        data,
+        pageData: landingPageData,
+        metaData,
+        headerMenuItems,
+        socialMenuItems,
+        background,
+        favicon,
+        avatar,
+        logoIcon,
+        logoIconBlack,
+        logoIconWhite,
+        logoText,
+        logoTextBlack,
+        logoTextWhite,
+        process: {
+          env: process.env,
+        },
+        currentPath: path,
       },
-    },
-  });
+    });
+  }
+
+  /**
+   * Linktree
+   * @url /links
+   */
+  if (linksPageData) {
+    const path = `/${linksPageData.slug || "links"}`;
+
+    createPage({
+      path,
+      component: require.resolve(`./src/templates/links.js`),
+      context: {
+        data,
+        pageData: linksPageData,
+        metaData,
+        headerMenuItems,
+        socialMenuItems,
+        background,
+        favicon,
+        avatar,
+        logoIcon,
+        logoIconBlack,
+        logoIconWhite,
+        logoText,
+        logoTextBlack,
+        logoTextWhite,
+        process: {
+          env: process.env,
+        },
+        currentPath: path,
+      },
+    });
+  }
 };
 
 /**

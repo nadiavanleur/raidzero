@@ -16,9 +16,19 @@
   border: var(--border-base);
 }
 
+.c-main__avatar--small {
+  width: 100px;
+  height: 100px;
+}
+
 .c-main__title {
   margin-bottom: var(--s-base);
-  font-weight: 500;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.c-main__title--center {
+  text-align: center;
 }
 
 .c-main__logo {

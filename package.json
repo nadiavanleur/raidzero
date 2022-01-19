@@ -2,6 +2,13 @@
   "name": "raidzero",
   "version": "0.1.0",
   "private": true,
+  "scripts": {
+    "start": "node scripts/start.js",
+    "build": "npm run gatsby-build && node scripts/build.js",
+    "test": "node scripts/test.js",
+    "gatsby-build": "rm -rf .cache/ && gatsby build",
+    "gatsby-develop": "rm -rf .cache/ && gatsby develop"
+  },
   "dependencies": {
     "@babel/core": "^7.16.5",
     "@babel/plugin-proposal-optional-chaining": "^7.16.5",
@@ -69,13 +76,6 @@
     "webpack-dev-server": "^4.6.0",
     "webpack-manifest-plugin": "^4.0.2",
     "workbox-webpack-plugin": "^6.4.1"
-  },
-  "scripts": {
-    "start": "node scripts/start.js",
-    "build": "npm run gatsby-build && node scripts/build.js",
-    "test": "node scripts/test.js",
-    "gatsby-build": "rm -rf .cache/ && gatsby build",
-    "gatsby-develop": "rm -rf .cache/ && gatsby develop"
   },
   "eslintConfig": {
     "extends": [

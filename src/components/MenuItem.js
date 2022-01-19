@@ -35,6 +35,9 @@ const MenuItem = ({ data, sys }) => {
             )}
           </>
         )}
+        {menuItem.label && (
+          <span className="c-nav__label">{menuItem.label}</span>
+        )}
       </a>
     </li>
   );
